@@ -1,0 +1,1 @@
+https://site-autentica-o-frank.pages.dev/oauth/callback/google
