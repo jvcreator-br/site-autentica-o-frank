@@ -1,0 +1,2 @@
+Página inicial: https://site-autentica-o-frank.pages.dev
+URL de retorno: https://site-autentica-o-frank.pages.dev/oauth/callback/github
