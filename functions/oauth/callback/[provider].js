@@ -9,17 +9,24 @@ export async function onRequestGet({ request, env, params }) {
   const state = url.searchParams.get('state');
   const transaction = cookie(request, '__Host-oauth-tx');
   if (url.searchParams.has('error') || !code || !state || !transaction) return error();
+  let stage = 'transaction';
   try {
     const now = Math.floor(Date.now() / 1000);
     const result = await env.DB.prepare(
       'DELETE FROM oauth_transactions WHERE id_hash = ? AND provider = ? AND state_hash = ? AND expires_at > ? RETURNING nonce, code_verifier'
     ).bind(await hash(transaction), provider, await hash(state), now).first();
-    if (!result) return error();
+    if (!result) {
+      console.error('OAuth callback failed', provider, stage);
+      return error();
+    }
     const config = providerConfig(env, provider);
+    stage = 'token';
     const tokens = await exchange(config, code, result.code_verifier);
+    stage = 'identity';
     const identity = provider === 'google'
       ? await googleIdentity(tokens.id_token, env, result.nonce)
       : await githubIdentity(tokens, config);
+    stage = 'session';
     const session = random();
     await env.DB.prepare(
       'INSERT INTO sessions (id_hash, issuer, subject, email, display_name, expires_at, created_at) VALUES (?, ?, ?, ?, ?, ?, ?)'
@@ -30,6 +37,7 @@ export async function onRequestGet({ request, env, params }) {
     headers.append('Set-Cookie', sessionCookie(session));
     return new Response(null, { status: 302, headers });
   } catch (_) {
+    console.error('OAuth callback failed', provider, stage);
     return error();
   }
 }
