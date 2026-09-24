@@ -1,0 +1,5 @@
+type | name
+index | oauth_transactions_expiry
+index | sessions_expiry
+table | oauth_transactions
+table | sessions
