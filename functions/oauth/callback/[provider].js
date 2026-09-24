@@ -36,8 +36,11 @@ export async function onRequestGet({ request, env, params }) {
     headers.append('Set-Cookie', txCookie('', 0));
     headers.append('Set-Cookie', sessionCookie(session));
     return new Response(null, { status: 302, headers });
-  } catch (_) {
-    console.error('OAuth callback failed', provider, stage);
+    } catch (caught) {
+    const reason = provider === 'github' && stage === 'identity' &&
+      ['github token', 'github user', 'github identity', 'github revoke'].includes(caught?.message)
+      ? caught.message : 'other';
+    console.error('OAuth callback failed', provider, stage, reason);
     return error();
   }
 }
