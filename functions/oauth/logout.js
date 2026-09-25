@@ -1,7 +1,11 @@
 import { cookie, hash, sessionCookie } from '../_shared/auth.js';
 
-export async function onRequestPost({ request, env }) {
+export async function onRequest({ request, env }) {
   const headers = new Headers({ 'Cache-Control': 'no-store' });
+  if (request.method !== 'POST') {
+    headers.set('Allow', 'POST');
+    return new Response(null, { status: 405, headers });
+  }
   if (!env.DB || !env.PUBLIC_BASE_URL) return new Response(null, { status: 503, headers });
   if (request.headers.get('Origin') !== env.PUBLIC_BASE_URL)
     return new Response(null, { status: 403, headers });
