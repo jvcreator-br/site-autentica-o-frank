@@ -3,31 +3,43 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Login | Atividade OAuth</title>
+  <meta name="description" content="Página de acesso do projeto acadêmico de João Vitor Andreata.">
+  <title>Acesso ao projeto | João Vitor Andreata</title>
+  <link rel="stylesheet" href="/styles.css">
+  <script src="/app.js" defer></script>
 </head>
 <body>
-  <main>
-    <h1>Atividade de autenticação</h1>
-    <p id="status">Consultando a sessão...</p>
-    <nav aria-label="Opções de login">
-      <p><a href="/oauth/login/google">Entrar com Google</a></p>
-      <p><a href="/oauth/login/github">Entrar com GitHub</a></p>
-    </nav>
-    <form method="post" action="/oauth/logout">
-      <button type="submit">Sair</button>
-    </form>
+  <header class="site-header">
+    <a class="site-name" href="/">Projeto acadêmico</a>
+    <span>João Vitor Andreata</span>
+  </header>
+
+  <main class="page">
+    <section class="login-card" aria-labelledby="page-title">
+      <p class="eyebrow">ÁREA DE ACESSO</p>
+      <h1 id="page-title">Bem-vindo ao projeto.</h1>
+      <p class="intro">Escolha uma conta para entrar.</p>
+
+      <nav class="login-options" aria-label="Opções de login">
+        <a class="button button-google" href="/oauth/login/google">Entrar com Google</a>
+        <a class="button button-github" href="/oauth/login/github">Entrar com GitHub</a>
+      </nav>
+
+      <div class="session-box">
+        <h2>Sua sessão</h2>
+        <p id="status" role="status" aria-live="polite" aria-busy="true">Consultando a sessão…</p>
+        <form id="logout-form" method="post" action="/oauth/logout" hidden>
+          <button class="button button-logout" type="submit">Sair da conta</button>
+        </form>
+      </div>
+
+      <noscript><p class="notice">Ative o JavaScript para consultar sua sessão. Os links de login continuam disponíveis.</p></noscript>
+    </section>
   </main>
-  <script>
-    fetch('/api/me', { credentials: 'same-origin' })
-      .then(response => response.ok ? response.json() : null)
-      .then(user => {
-        document.getElementById('status').textContent = user
-          ? 'Sessão de ' + (user.email || user.displayName || user.subject) + '.'
-          : 'Nenhuma sessão neste navegador.';
-      })
-      .catch(() => {
-        document.getElementById('status').textContent = 'Não foi possível consultar a sessão.';
-      });
-  </script>
+
+  <footer class="site-footer">
+    <p>Desenvolvido por João Vitor Andreata.</p>
+    <p>Atividade de autenticação com Google e GitHub.</p>
+  </footer>
 </body>
 </html>
