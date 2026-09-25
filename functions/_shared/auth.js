@@ -90,7 +90,7 @@ export async function githubIdentity(tokenResponse, config) {
   if (typeof tokenResponse.access_token !== 'string' ||
       String(tokenResponse.token_type).toLowerCase() !== 'bearer') throw new Error('github token');
   const token = tokenResponse.access_token;
-  const headers = { Authorization: 'Bearer ' + token, Accept: 'application/vnd.github+json', 'X-GitHub-Api-Version': '2026-03-10' };
+  const headers = { Authorization: 'Bearer ' + token, Accept: 'application/vnd.github+json', 'User-Agent': 'site-autentica-o-frank', 'X-GitHub-Api-Version': '2026-03-10' };
   const profileResponse = await fetch('https://api.github.com/user', { headers });
   if (!profileResponse.ok) throw new Error('github user');
   const profile = await profileResponse.json();
@@ -98,7 +98,7 @@ export async function githubIdentity(tokenResponse, config) {
   const revoke = await fetch('https://api.github.com/applications/' + encodeURIComponent(config.id) + '/grant', {
     method: 'DELETE', headers: {
       Authorization: 'Basic ' + btoa(config.id + ':' + config.secret),
-      Accept: 'application/vnd.github+json', 'X-GitHub-Api-Version': '2026-03-10',
+      Accept: 'application/vnd.github+json', 'User-Agent': 'site-autentica-o-frank', 'X-GitHub-Api-Version': '2026-03-10',
       'Content-Type': 'application/json'
     }, body: JSON.stringify({ access_token: token })
   });
