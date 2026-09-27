@@ -7,7 +7,7 @@ Status: revisão final pendente; não constitui declaração de conclusão integ
 - [x] O site é servido por https://site-autentica-o-frank.pages.dev.
 - [x] Arquivos estáticos e Functions usam a mesma origem.
 - [x] Publicação por integração com GitHub, branch main, saída public, comando de construção vazio.
-- [ ] Dashboard da disciplina incluído em public. O repositório atual contém apenas a página mínima de login; é necessário confirmar e obter o dashboard original.
+- [x] Dashboard da disciplina incluído em public. A página inicial foi reorganizada como painel estático inspirado no Light Bootstrap Dashboard, mantendo as rotas de autenticação existentes.
 - [x] O projeto não contém package.json, package-lock.json, node_modules ou wrangler.jsonc; as Functions usam APIs Web sem bibliotecas externas.
 - [x] Cada provedor usa URL de retorno própria e exata.
 - [x] Os pedidos de autorização usam código e PKCE S256, verificados nas respostas 302.

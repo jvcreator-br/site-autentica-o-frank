@@ -3,43 +3,183 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Página de acesso do projeto acadêmico de João Vitor Andreata.">
-  <title>Acesso ao projeto | João Vitor Andreata</title>
+  <meta name="description" content="Dashboard de acesso do projeto acadêmico de João Vitor Andreata.">
+  <title>Dashboard | João Vitor Andreata</title>
   <link rel="stylesheet" href="/styles.css">
   <script src="/app.js" defer></script>
 </head>
-<body>
-  <header class="site-header">
-    <a class="site-name" href="/">Projeto acadêmico</a>
-    <span>João Vitor Andreata</span>
-  </header>
+<body data-session="loading">
+  <div class="dashboard-shell">
+    <aside class="sidebar" aria-label="Menu do dashboard">
+      <a class="brand" href="/">
+        <span class="brand-mark">JA</span>
+        <span>
+          <strong>Autentica</strong>
+          <small>Projeto acadêmico</small>
+        </span>
+      </a>
 
-  <main class="page">
-    <section class="login-card" aria-labelledby="page-title">
-      <p class="eyebrow">ÁREA DE ACESSO</p>
-      <h1 id="page-title">Bem-vindo ao projeto.</h1>
-      <p class="intro">Escolha uma conta para entrar.</p>
-
-      <nav class="login-options" aria-label="Opções de login">
-        <a class="button button-google" href="/oauth/login/google">Entrar com Google</a>
-        <a class="button button-github" href="/oauth/login/github">Entrar com GitHub</a>
+      <nav class="sidebar-nav">
+        <a class="nav-item active" href="#inicio">Dashboard</a>
+        <a class="nav-item" href="#usuario">Usuário</a>
+        <a class="nav-item" href="#login">Login</a>
+        <a class="nav-item" href="#entrega">Entrega</a>
       </nav>
 
-      <div class="session-box">
-        <h2>Sua sessão</h2>
-        <p id="status" role="status" aria-live="polite" aria-busy="true">Consultando a sessão…</p>
-        <form id="logout-form" method="post" action="/oauth/logout" hidden>
-          <button class="button button-logout" type="submit">Sair da conta</button>
-        </form>
+      <div class="sidebar-footer">
+        <span class="mini-label">Aluno</span>
+        <strong>João Vitor Andreata</strong>
       </div>
+    </aside>
 
-      <noscript><p class="notice">Ative o JavaScript para consultar sua sessão. Os links de login continuam disponíveis.</p></noscript>
-    </section>
-  </main>
+    <main class="main-panel" id="inicio">
+      <header class="topbar">
+        <div>
+          <span class="mini-label">Cloudflare Pages</span>
+          <h1>Dashboard de autenticação</h1>
+        </div>
+        <span class="session-pill" id="session-pill">Verificando sessão</span>
+      </header>
 
-  <footer class="site-footer">
-    <p>Desenvolvido por João Vitor Andreata.</p>
-    <p>Atividade de autenticação com Google e GitHub.</p>
-  </footer>
+      <section class="hero-panel" aria-labelledby="dashboard-title">
+        <div>
+          <span class="mini-label">Google OAuth + GitHub OAuth</span>
+          <h2 id="dashboard-title">Acesso do projeto pronto para a avaliação.</h2>
+          <p>Entre com uma conta, acompanhe o estado da sessão e saia com segurança pelo mesmo painel.</p>
+        </div>
+        <div class="hero-metric" aria-label="Resumo do projeto">
+          <strong>2</strong>
+          <span>provedores configurados</span>
+        </div>
+      </section>
+
+      <section class="status-grid" aria-label="Resumo técnico">
+        <article class="status-card">
+          <span class="status-dot dot-green"></span>
+          <div>
+            <strong>Pages Functions</strong>
+            <span>Rotas de API e OAuth preservadas</span>
+          </div>
+        </article>
+        <article class="status-card">
+          <span class="status-dot dot-blue"></span>
+          <div>
+            <strong>D1</strong>
+            <span>Sessões guardadas por resumo</span>
+          </div>
+        </article>
+        <article class="status-card">
+          <span class="status-dot dot-orange"></span>
+          <div>
+            <strong>Cookies</strong>
+            <span>Secure, HttpOnly e SameSite</span>
+          </div>
+        </article>
+      </section>
+
+      <section class="content-grid">
+        <article class="card profile-card" id="usuario">
+          <div class="card-header">
+            <div>
+              <span class="mini-label">Área do usuário</span>
+              <h2>Sessão atual</h2>
+            </div>
+            <span class="card-badge" id="provider-badge">Aguardando</span>
+          </div>
+
+          <div class="profile-summary">
+            <span class="avatar" id="user-avatar">...</span>
+            <div>
+              <strong id="user-name">Consultando sessão</strong>
+              <span id="user-email">Aguarde um instante.</span>
+            </div>
+          </div>
+
+          <p id="status" role="status" aria-live="polite" aria-busy="true">Consultando a sessão...</p>
+
+          <dl class="session-details">
+            <div>
+              <dt>Estado</dt>
+              <dd id="session-state">Carregando</dd>
+            </div>
+            <div>
+              <dt>Identificador</dt>
+              <dd id="user-subject">-</dd>
+            </div>
+            <div>
+              <dt>Última consulta</dt>
+              <dd id="last-check">-</dd>
+            </div>
+          </dl>
+
+          <form id="logout-form" method="post" action="/oauth/logout" hidden>
+            <button class="button button-logout" type="submit">Sair da conta</button>
+          </form>
+        </article>
+
+        <article class="card login-card" id="login">
+          <div class="card-header">
+            <div>
+              <span class="mini-label">Entrada</span>
+              <h2>Escolha uma conta</h2>
+            </div>
+          </div>
+
+          <nav class="login-options" aria-label="Opções de login">
+            <a class="button button-google" href="/oauth/login/google">
+              <span class="button-icon">G</span>
+              Entrar com Google
+            </a>
+            <a class="button button-github" href="/oauth/login/github">
+              <span class="button-icon">GH</span>
+              Entrar com GitHub
+            </a>
+          </nav>
+
+          <div class="login-note">
+            <strong id="login-title">Login disponível</strong>
+            <span id="login-copy">Os links acima iniciam o fluxo OAuth configurado no Cloudflare Pages.</span>
+          </div>
+        </article>
+      </section>
+
+      <section class="card delivery-card" id="entrega">
+        <div class="card-header">
+          <div>
+            <span class="mini-label">Entrega</span>
+            <h2>Itens principais do trabalho</h2>
+          </div>
+        </div>
+
+        <div class="delivery-list">
+          <div>
+            <strong>Google OAuth</strong>
+            <span>Callback dedicado e validação do usuário.</span>
+          </div>
+          <div>
+            <strong>GitHub OAuth</strong>
+            <span>Consulta do perfil e revogação da autorização.</span>
+          </div>
+          <div>
+            <strong>/api/me</strong>
+            <span>Retorna dados da sessão autenticada.</span>
+          </div>
+          <div>
+            <strong>Logout</strong>
+            <span>Remove a sessão no D1 e expira o cookie.</span>
+          </div>
+        </div>
+      </section>
+
+      <footer class="footer">
+        <span>Desenvolvido por João Vitor Andreata.</span>
+        <span>Atividade de autenticação com Google, GitHub, D1 e Cloudflare Pages.</span>
+      </footer>
+
+      <noscript>
+        <p class="notice">Ative o JavaScript para consultar sua sessão. Os links de login continuam disponíveis.</p>
+      </noscript>
+    </main>
+  </div>
 </body>
 </html>
