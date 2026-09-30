@@ -1,7 +1,1 @@
 https://site-autentica-o-frank.pages.dev/oauth/callback/google
-
-Conferido no cliente OAuth Web do Google Cloud em 30/09/2026.
-Esse é o único URI de redirecionamento autorizado cadastrado.
-Escopos cadastrados e solicitados: openid email profile.
-App externo, com status Testando. A própria conta do aluno está na lista de teste.
-Client ID, Client Secret e identificação da conta foram omitidos.
