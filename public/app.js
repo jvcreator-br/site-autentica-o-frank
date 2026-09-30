@@ -47,21 +47,6 @@ function initials(value) {
   return letters ? letters.toUpperCase() : 'JA';
 }
 
-function renderGuest() {
-  setSessionMode('guest');
-  updateBadges('Sem sessão');
-  elements.userAvatar.textContent = 'JA';
-  elements.userName.textContent = 'Visitante';
-  elements.userEmail.textContent = 'Entre com Google ou GitHub para continuar.';
-  elements.userSubject.textContent = '-';
-  elements.sessionState.textContent = 'Não autenticado';
-  elements.loginTitle.textContent = 'Login disponível';
-  elements.loginCopy.textContent = 'Escolha Google ou GitHub para iniciar o fluxo OAuth.';
-  elements.logout.hidden = true;
-  updateLastCheck();
-  setStatus('Nenhuma sessão ativa neste navegador.', 'guest');
-}
-
 function renderUser(user) {
   const name = user.displayName || user.email || user.subject || 'Usuário autenticado';
   const provider = providerName(user.issuer);
@@ -157,3 +142,10 @@ if (page === 'login') {
   setMenu(false);
   updateSession();
 }
+
+window.addEventListener('pageshow', event => {
+  if (event.persisted) {
+    if (page === 'login') checkLogin();
+    else updateSession();
+  }
+});
