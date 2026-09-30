@@ -4,7 +4,11 @@ Trabalho de autenticação com Google, GitHub, Cloudflare Pages e D1.
 
 Site: https://site-autentica-o-frank.pages.dev
 
-O dashboard usa HTML, CSS e JavaScript. O Light Bootstrap Dashboard serviu como referência visual. Não há etapa de build, dependências npm ou configuração do Wrangler no projeto.
+A página inicial é o login. Ao entrar com Google ou GitHub, o usuário vai para `dashboard.html`; o botão Sair faz POST e volta ao login. O painel consulta `/api/me` antes de mostrar o perfil. Sem sessão válida, volta à página inicial.
+
+O dashboard foi adaptado do [Light Bootstrap Dashboard v2.0.1](https://github.com/creativetimofficial/light-bootstrap-dashboard), da Creative Tim (commit de origem `651e5de95677efcdb84fe76a3096250e8743beb8`). A estrutura de sidebar, navbar, cards e footer vem do modelo `examples/dashboard.html`. Os CSS Bootstrap e Light Bootstrap Dashboard e a fonte Nucleo estão em `public/assets/`. A declaração da fonte foi reduzida a WOFF2, mantendo a fonte original. A licença MIT está em `LICENSE-light-bootstrap-dashboard.txt`, com os créditos preservados.
+
+O perfil e o estado da conta substituem os dados fictícios do exemplo. A navegação móvel e a consulta da sessão usam JavaScript puro em `app.js`; `styles.css` contém os ajustes da aplicação. Não há etapa de build, dependências npm ou configuração do Wrangler no projeto.
 
 ## Estrutura
 
