@@ -27,7 +27,7 @@ Lista da seção 17 da avaliação. As ressalvas estão abaixo; uma marcação t
 
 ## Conferência e ressalvas
 
-- A seção 7.2 permite adaptar index.html ou criar a página mínima; a página 3 também admite uma estrutura escolhida que o aluno saiba explicar. O dashboard atual foi mantido com public/ e functions/ na raiz, login dos dois provedores e logout POST. Não há template de demonstração nem dependências de pacotes no projeto.
+- Seção 7.2: public/index.html é a página de login. public/dashboard.html adapta o Light Bootstrap Dashboard v2.0.1 da Creative Tim, com sidebar, navbar, cards e footer, CSS originais e fonte Nucleo. O perfil vem de /api/me; sem sessão a navegação volta ao login. Sair usa POST. public/ e functions/ são pastas irmãs; os oito arquivos continuam em public/entrega1/. Licença e origem estão no repositório, sem dependências npm ou páginas fictícias de demonstração.
 - Pages: main, framework None, build command vazio, saída public, root vazio. As Functions foram compiladas no deploy de produção após binding e secrets. DB ativo, duas tabelas e dois índices conferidos no D1; nenhum identificador de banco no código.
 - Google: cliente Web, retorno HTTPS único e exato, apenas openid email profile, app em teste e conta do aluno cadastrada como testador. GitHub: homepage e retorno exatos, Device Flow desativado e nenhum scope adicional.
 - Os Client Secrets estão criptografados no Pages. A frase sobre troca de tokens deve ser lida com a seção 13.5: a revogação GitHub também exige Client ID e Client Secret em Basic e access_token no corpo. O código faz essa chamada e exige 204 antes de criar sessão. Nada disso é exposto ao navegador.
