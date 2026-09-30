@@ -1,9 +1,2 @@
-Página inicial: https://site-autentica-o-frank.pages.dev
-URL de retorno: https://site-autentica-o-frank.pages.dev/oauth/callback/github
-
-Conferido nas configurações do OAuth App GitHub em 30/09/2026.
-Esse é o único URI de retorno cadastrado.
-Device Flow: desativado.
-Wildcard matching: desativado.
-A autorização pede somente dados públicos; o pedido não acrescenta scopes.
-Client ID e Client Secret foram omitidos.
+Homepage URL: https://site-autentica-o-frank.pages.dev
+Authorization callback URL: https://site-autentica-o-frank.pages.dev/oauth/callback/github
