@@ -92,7 +92,7 @@ export async function githubIdentity(tokenResponse, config) {
   const token = tokenResponse.access_token;
   const headers = { Authorization: 'Bearer ' + token, Accept: 'application/vnd.github+json', 'User-Agent': 'site-autentica-o-frank', 'X-GitHub-Api-Version': '2026-03-10' };
   const profileResponse = await fetch('https://api.github.com/user', { headers });
-  if (!profileResponse.ok) throw new Error('github user');
+  if (profileResponse.status !== 200) throw new Error('github user');
   const profile = await profileResponse.json();
   if (!Number.isSafeInteger(profile.id) || profile.id <= 0) throw new Error('github identity');
   const revoke = await fetch('https://api.github.com/applications/' + encodeURIComponent(config.id) + '/grant', {
