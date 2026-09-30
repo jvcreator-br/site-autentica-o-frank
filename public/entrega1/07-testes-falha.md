@@ -24,7 +24,7 @@ Limites: os testes HTTP de state e consumo usam códigos inválidos. Eles verifi
 
 | Pedido | Resultado observado |
 | --- | --- |
-| GET / por HTTPS | 200; dashboard carregado no navegador |
+| GET / por HTTPS | 200; página de login carregada no navegador na versão final |
 | GET /api/health | 200; JSON com status ok; no-store |
 | GET /api/me sem sessão | 401; no-store |
 | GET /oauth/login/invalid | 404; no-store |
@@ -79,3 +79,21 @@ O aluno informou que executou os testes e confirmou os resultados abaixo. Esta a
 | Transacao OAuth expirada | Transacao alem de sua validade | Retorno OAuth | Recusar, sem criar sessao | Retorno recusado, sem criar sessao |
 
 A tabela descreve as condicoes dos cenarios e os resultados confirmados pelo aluno. Nao documenta horarios, duracoes, comandos ou capturas adicionais que nao foram fornecidos. A confirmacao nao abrange a inspecao dos registros de execucao do Cloudflare, o aceite final ou outras pendencias fora desses testes.
+
+## Login e dashboard publicados - 30/09/2026, entre 16h24 e 16h33
+
+O painel foi adaptado do Light Bootstrap Dashboard v2.0.1, com os CSS Bootstrap e Light Bootstrap Dashboard e a fonte Nucleo no próprio projeto. A raiz agora é a página de login, sem apresentação dos requisitos da atividade. O backend de autenticação foi preservado.
+
+| Caso | Preparação | Pedido enviado | Resultado esperado | Resultado observado |
+| --- | --- | --- | --- | --- |
+| Login Google no novo frontend | Navegador sem sessão local; conta do aluno já conectada ao Google | Clicar Entrar com Google e concluir o retorno | Ir ao dashboard e consultar o perfil | /dashboard.html abriu; estado Autenticado; provedor Google; perfil preenchido e botão Sair visível |
+| Saída Google | Sessão Google local ativa no dashboard | Clicar Sair; formulário POST para /oauth/logout | Voltar ao login, sem sessão | Página de login aberta; consulta de sessão terminou com mensagem para escolher uma conta |
+| Login GitHub no novo frontend | Página de login sem sessão local; conta do aluno conectada ao GitHub | Clicar Entrar com GitHub e autorizar a OAuth App cadastrada | Ir ao dashboard e consultar o perfil | /dashboard.html abriu; estado Autenticado; provedor GitHub; perfil preenchido e botão Sair visível |
+| Recarregar o painel | Sessão GitHub local ativa | Recarregar /dashboard.html | Manter a sessão e o perfil | Estado Autenticado e provedor GitHub mantidos |
+| Saída GitHub | Sessão GitHub local ativa | Clicar Sair; formulário POST para /oauth/logout | Voltar ao login, sem sessão | Login aberto; mensagem Escolha uma conta para entrar |
+| Voltar depois de sair | Logout GitHub concluído | Botão Voltar do navegador | Não restaurar a área autenticada | Voltou ao login; nenhum perfil visível |
+| Acesso direto sem sessão | Navegador depois do logout | Abrir /dashboard.html | Consultar /api/me e voltar ao login | Página de login aberta |
+| Menu em tela pequena | Dashboard autenticado, largura de 379 pixels | Abrir menu, selecionar Meu perfil | Mostrar o menu e fechar ao navegar | Menu abriu; link foi para #perfil e fechou o menu; sem rolagem horizontal |
+| Arquivos de produção | Clone novo do GitHub comparado ao conteúdo revisado | GET de todos os arquivos públicos, /api/health, /api/me sem sessão e GET /oauth/logout | Arquivos iguais aos revisados; respostas 200, 401 e 405 conforme a rota | 54 verificações passaram, incluindo os oito nomes exatos de evidências, PDFs válidos, assets presentes e conteúdo publicado igual ao repositório |
+
+A inspeção visual local também cobriu o layout de computador e de celular; o perfil usado somente na prévia local era sintético e não foi incluído no projeto. As autenticações Google e GitHub da tabela acima foram feitas no site de produção com a conta do aluno. As capturas de comprovação do painel excluem o trecho com e-mail e identificador privado. Não foram copiados cookies, tokens ou parâmetros temporários.
