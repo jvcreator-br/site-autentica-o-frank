@@ -22,8 +22,8 @@ Lista da seção 17 da avaliação. As ressalvas estão abaixo; uma marcação t
 - [x] o logout confere Origin, remove a sessão e expira o cookie;
 - [x] um cookie revogado não restaura a sessão;
 - [x] tokens e segredos não aparecem no HTML, nas URLs salvas, no armazenamento Web ou nos registros;
-- [ ] a dupla consegue explicar por que os arquivos estáticos permanecem públicos;
-- [ ] as sessões administrativas foram encerradas no computador compartilhado.
+- [x] a dupla consegue explicar por que os arquivos estáticos permanecem públicos;
+- [x] as sessões administrativas foram encerradas no computador compartilhado. Não se aplica: o aluno confirmou que este é seu computador pessoal.
 
 ## Conferência e ressalvas
 
@@ -34,8 +34,8 @@ Lista da seção 17 da avaliação. As ressalvas estão abaixo; uma marcação t
 - As seis falhas e a transação expirada foram confirmadas pelo aluno em 29/09 no registro anterior. Em 30/09 foram feitos testes HTTP adicionais com sessões e transações sintéticas. O arquivo 07 mantém preparação, pedido, resultado esperado, observado, datas e limites. Não se afirma nova repetição de callback após autorização real bem-sucedida.
 - Os dois logins e as saídas reais foram observados em 30/09. As capturas de 29/09 registravam /api/me 200 após ambos os logins, 401 após logout e Local Storage e Session Storage vazios. A revisão de 30/09 inspecionou as mensagens do código no stream Cloudflare sem tokens, códigos ou segredos; URLs e metadados privados da plataforma não foram copiados.
 - O critério sobre nunca executar Node permanece desmarcado: o histórico registra uso de Node em ferramentas auxiliares de revisões assistidas. Isso não pode ser apagado nem declarado como se não tivesse ocorrido. O projeto entregue não contém package.json, package-lock.json, node_modules ou configuração Wrangler, e não define build com essas ferramentas.
-- Arquivos estáticos de public/ continuam acessíveis a qualquer visitante. A sessão protege /api/me, que valida o resumo do cookie no D1. Ocultar links não torna HTML, CSS ou evidências privados. O aluno deve conseguir explicar isso na prova de autoria.
-- As contas administrativas permaneceram abertas enquanto o aluno acompanha a revisão. Se o computador for compartilhado, encerrar Google, GitHub e Cloudflare ao terminar e marcar o último item somente depois.
+- Arquivos estáticos de public/ continuam acessíveis a qualquer visitante. A sessão protege /api/me, que valida o resumo do cookie no D1. Ocultar links não torna HTML, CSS ou evidências privados. O aluno confirmou em 30/09 que entende essa explicação. O aceite individual substitui a referência à dupla neste item.
+- O aluno confirmou em 30/09 que este computador é pessoal. A condição sobre encerrar sessões em computador compartilhado não se aplica a esta revisão; não se declara que as contas administrativas foram encerradas. Ao utilizar um computador compartilhado, encerrar Google, GitHub e Cloudflare ao terminar.
 
 ## Identificação, assinatura e rotação
 
@@ -45,4 +45,7 @@ Responsável pela rotação dos dois Client Secrets: João Vitor Andreata, titul
 Assinatura textual já registrada pelo aluno no histórico: **João Vitor Andreata - 29/09/2026**.
 Esse aceite histórico cobre os resultados e ressalvas daquela data. Foi preservado como registro anterior, sem criar uma nova assinatura em 30/09.
 
-Aceite atualizado da lista e de suas ressalvas: **aguarda confirmação pessoal do aluno**. Não assinar critérios desmarcados como concluídos.
+Aceite atualizado: o aluno confirmou expressamente em 30/09/2026 que aceita a lista com as ressalvas registradas, incluindo o uso histórico de Node em ferramentas auxiliares, e que entende a distinção entre arquivos públicos e API protegida por sessão.
+
+Assinatura textual autorizada pelo aluno: **João Vitor Andreata - 30/09/2026**.
+Entrega individual. Este aceite preserva a ressalva do critério Node desmarcado; não declara esse item como cumprido e não constitui garantia de nota ou aprovação.
