@@ -103,7 +103,7 @@ async function updateSession() {
     });
 
     if (response.status === 401) {
-      renderGuest();
+      window.location.replace('/');
       return;
     }
 
@@ -114,4 +114,46 @@ async function updateSession() {
   }
 }
 
-updateSession();
+const page = document.body.dataset.page;
+
+async function checkLogin() {
+  try {
+    const response = await fetch('/api/me', { credentials: 'same-origin', cache: 'no-store' });
+    if (response.ok) {
+      window.location.replace('/dashboard.html');
+      return;
+    }
+    if (response.status !== 401) throw new Error('session unavailable');
+    elements.status.textContent = 'Escolha uma conta para entrar.';
+  } catch {
+    elements.status.textContent = 'Não foi possível consultar a sessão. Tente entrar novamente.';
+  }
+  elements.status.setAttribute('aria-busy', 'false');
+}
+
+if (page === 'login') {
+  checkLogin();
+} else {
+  const menu = document.getElementById('menu-lateral');
+  const toggle = document.getElementById('menu-toggle');
+  const mobile = window.matchMedia('(max-width: 991px)');
+  function setMenu(open) {
+    document.documentElement.classList.toggle('nav-open', open);
+    toggle.setAttribute('aria-expanded', String(open));
+    toggle.setAttribute('aria-label', open ? 'Fechar menu' : 'Abrir menu');
+    menu.setAttribute('aria-hidden', String(mobile.matches && !open));
+    menu.inert = mobile.matches && !open;
+  }
+  toggle.addEventListener('click', () => setMenu(toggle.getAttribute('aria-expanded') !== 'true'));
+  mobile.addEventListener('change', () => setMenu(false));
+  menu.querySelectorAll('a').forEach(link => link.addEventListener('click', () => setMenu(false)));
+  document.addEventListener('keydown', event => {
+    if (event.key === 'Escape' && toggle.getAttribute('aria-expanded') === 'true') {
+      setMenu(false);
+      toggle.focus();
+    }
+  });
+  document.getElementById('refresh-session').addEventListener('click', updateSession);
+  setMenu(false);
+  updateSession();
+}
