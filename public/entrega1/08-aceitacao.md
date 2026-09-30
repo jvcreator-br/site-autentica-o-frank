@@ -1,66 +1,48 @@
-# Conferência da entrega
+# Lista de aceitação
 
 Aluno: João Vitor Andreata.
-Revisão técnica: 30/09/2026.
 Site: https://site-autentica-o-frank.pages.dev.
+Conferência técnica e comparação com o enunciado: 30/09/2026.
 
-Esta revisão segue os requisitos detalhados da solicitação atual. As marcações mostram o que foi conferido e mantêm os limites dos testes. O enunciado integral da disciplina não estava disponível na conversa recuperada.
+Lista da seção 17 da avaliação. As ressalvas estão abaixo; uma marcação técnica não substitui a confirmação pessoal do aluno.
 
-## Repositório e publicação
+- [x] o site é servido pelo endereço pages.dev atribuído à equipe;
+- [x] os arquivos estáticos e as Functions compartilham a mesma origem;
+- [x] o projeto foi publicado por integração com GitHub;
+- [ ] a equipe não instalou nem executou Node.js, npm, npx ou Wrangler;
+- [x] cada provedor usa uma URL de retorno própria e exata;
+- [x] os pedidos de autorização usam código e PKCE S256;
+- [x] a Function apresenta o Client Secret correto somente na troca de tokens;
+- [x] o retorno recusa uma transação ausente, expirada, alterada ou reutilizada;
+- [x] o id_token do Google só produz uma sessão depois da validação criptográfica e semântica;
+- [x] o access_token do GitHub é usado somente para consultar /user e a autorização é revogada antes da criação da sessão;
+- [x] o cookie de sessão é opaco, Secure, HttpOnly, SameSite=Strict e não possui Domain;
+- [x] o D1 guarda o resumo do cookie, não seu valor bruto;
+- [x] /api/me devolve somente o perfil necessário;
+- [x] o logout confere Origin, remove a sessão e expira o cookie;
+- [x] um cookie revogado não restaura a sessão;
+- [x] tokens e segredos não aparecem no HTML, nas URLs salvas, no armazenamento Web ou nos registros;
+- [ ] a dupla consegue explicar por que os arquivos estáticos permanecem públicos;
+- [ ] as sessões administrativas foram encerradas no computador compartilhado.
 
-- [x] Repositório atual e deploy inspecionados antes das alterações. A versão encontrada foi fb94be4, publicada em 29/09.
-- [x] Estrutura public/ e functions/ preservada. Nenhum package.json, package-lock.json, node_modules ou arquivo de configuração Wrangler foi encontrado.
-- [x] Dashboard próprio inspirado no Light Bootstrap Dashboard, com Google/GitHub, perfil via /api/me e logout POST. Atende ao formato autorizado na solicitação atual.
-- [x] Sem páginas ou assets de demonstração sobrando no projeto.
-- [x] Cloudflare Pages: branch main, framework None, build command vazio, saída public, root vazio e publicação automática habilitada.
-- [x] PUBLIC_BASE_URL exata; GOOGLE_CLIENT_ID e GITHUB_CLIENT_ID correspondem aos apps conferidos.
-- [x] GOOGLE_CLIENT_SECRET e GITHUB_CLIENT_SECRET aparecem como Secret e Value encrypted. Os valores não foram abertos nem copiados.
-- [x] Binding D1 chamado DB. As rotas publicadas inseriram e consultaram dados de teste nesse banco; o binding está ativo no deploy.
-- [x] /api/health respondeu 200 com status ok e no-store.
-- [x] Regra .gitattributes impede conversão automática dos PDFs pelo Git no Windows.
+## Conferência e ressalvas
 
-## OAuth, banco e sessão
+- A seção 7.2 permite adaptar index.html ou criar a página mínima; a página 3 também admite uma estrutura escolhida que o aluno saiba explicar. O dashboard atual foi mantido com public/ e functions/ na raiz, login dos dois provedores e logout POST. Não há template de demonstração nem dependências de pacotes no projeto.
+- Pages: main, framework None, build command vazio, saída public, root vazio. As Functions foram compiladas no deploy de produção após binding e secrets. DB ativo, duas tabelas e dois índices conferidos no D1; nenhum identificador de banco no código.
+- Google: cliente Web, retorno HTTPS único e exato, apenas openid email profile, app em teste e conta do aluno cadastrada como testador. GitHub: homepage e retorno exatos, Device Flow desativado e nenhum scope adicional.
+- Os Client Secrets estão criptografados no Pages. A frase sobre troca de tokens deve ser lida com a seção 13.5: a revogação GitHub também exige Client ID e Client Secret em Basic e access_token no corpo. O código faz essa chamada e exige 204 antes de criar sessão. Nada disso é exposto ao navegador.
+- As seis falhas e a transação expirada foram confirmadas pelo aluno em 29/09 no registro anterior. Em 30/09 foram feitos testes HTTP adicionais com sessões e transações sintéticas. O arquivo 07 mantém preparação, pedido, resultado esperado, observado, datas e limites. Não se afirma nova repetição de callback após autorização real bem-sucedida.
+- Os dois logins e as saídas reais foram observados em 30/09. As capturas de 29/09 registravam /api/me 200 após ambos os logins, 401 após logout e Local Storage e Session Storage vazios. A revisão de 30/09 inspecionou as mensagens do código no stream Cloudflare sem tokens, códigos ou segredos; URLs e metadados privados da plataforma não foram copiados.
+- O critério sobre nunca executar Node permanece desmarcado: o histórico registra uso de Node em ferramentas auxiliares de revisões assistidas. Isso não pode ser apagado nem declarado como se não tivesse ocorrido. O projeto entregue não contém package.json, package-lock.json, node_modules ou configuração Wrangler, e não define build com essas ferramentas.
+- Arquivos estáticos de public/ continuam acessíveis a qualquer visitante. A sessão protege /api/me, que valida o resumo do cookie no D1. Ocultar links não torna HTML, CSS ou evidências privados. O aluno deve conseguir explicar isso na prova de autoria.
+- As contas administrativas permaneceram abertas enquanto o aluno acompanha a revisão. Se o computador for compartilhado, encerrar Google, GitHub e Cloudflare ao terminar e marcar o último item somente depois.
 
-- [x] Somente google e github são aceitos pelo backend.
-- [x] PKCE S256, state, nonce para Google, transação de dez minutos no D1 e cookie __Host-oauth-tx protegido.
-- [x] Consumo atômico por DELETE RETURNING, conferindo provedor, resumos do cookie e state, e expiração.
-- [x] Google: callback exato, somente openid email profile, app externo em Testando e conta do aluno cadastrada como testador.
-- [x] Google: discovery/JWKS e verificação RS256, issuer, audience, exp, iat, nonce e subject no código. Login real funcionou nesta revisão.
-- [x] GitHub: homepage e callback exatos, Device Flow e wildcard desativados, sem scopes adicionais.
-- [x] GitHub: /user, ID numérico como subject e DELETE /applications/.../grant com 204 antes da sessão local. Login real funcionou; a ordem e a exigência de 204 foram verificadas no código.
-- [x] Tabelas oauth_transactions e sessions, com índices de expires_at, conferidas diretamente no D1. Definições registradas no arquivo 04.
-- [x] context.env.DB é recebido por desestruturação do contexto. Nenhum identificador de banco foi encontrado no código.
-- [x] Sessão opaca de oito horas; somente o resumo SHA-256 fica no D1.
-- [x] Cookie __Host-session com Path=/, Secure, HttpOnly, SameSite=Strict e sem Domain.
-- [x] /api/me devolve perfil mínimo com no-store; sessão válida deu 200, ausente ou expirada deu 401 nos testes HTTP.
-- [x] Logout somente POST, Origin exato, remoção da sessão e expiração do cookie. Origin inválido deu 403 e preservou a sessão; GET deu 405.
-- [x] Cookie revogado reutilizado deu 401. Dados sintéticos de teste removidos ao terminar.
-- [x] Logs emitidos pelo código não incluem tokens, secrets, códigos ou cookies. Mensagens de falha foram inspecionadas no stream; metadados privados da plataforma não foram publicados.
+## Identificação, assinatura e rotação
 
-## Evidências
+Entrega individual, confirmada pelo aluno em 30/09/2026.
+Responsável pela rotação dos dois Client Secrets: João Vitor Andreata, titular do projeto e dos apps. Nenhum segredo precisa ser informado.
 
-A pasta public/entrega1/ contém exatamente estes oito arquivos:
+Assinatura textual já registrada pelo aluno no histórico: **João Vitor Andreata - 29/09/2026**.
+Esse aceite histórico cobre os resultados e ressalvas daquela data. Foi preservado como registro anterior, sem criar uma nova assinatura em 30/09.
 
-- [x] 01-pages-configuracao.pdf: configuração Pages legível; comparada com o painel atual.
-- [x] 02-google-retorno.txt: callback exato e conferência do cliente Google.
-- [x] 03-github-retorno.txt: homepage, callback e opções conferidos no OAuth App.
-- [x] 04-d1-esquema.txt: tabelas, índices e definições SQL reais, sem linhas de usuários.
-- [x] 05-inicio-login-google.pdf: duas páginas, captura e cabeçalhos saneados. Conta e parâmetros temporários ocultos.
-- [x] 06-inicio-login-github.pdf: três páginas, captura, cookie e cabeçalhos saneados. Valores temporários ocultos.
-- [x] 07-testes-falha.md: resultados medidos em produção, métodos e limites explícitos.
-- [x] 08-aceitacao.md: esta conferência, sem matrícula ou identificação privada de conta.
-
-Os PDFs foram renderizados e lidos por completo. As imagens extraídas já contêm as tarjas; os PDFs não têm anexos, anotações ou texto extraído com valores sensíveis. Não foram encontrados Client Secret, access token, id_token, authorization code, cookie de sessão, state, nonce ou code_verifier reais nos arquivos atuais.
-
-## Limites e revisão do aluno
-
-- [x] Os logins reais e as saídas dos dois provedores foram observados no navegador em 30/09. Os testes HTTP com sessões e transações sintéticas estão identificados no arquivo 07.
-- [x] Reutilização de transação consumida e expiração testadas com dados sintéticos. A repetição de callback após login real, especificamente, permanece como confirmação histórica do aluno em 29/09, sem nova captura em 30/09.
-- [x] Local Storage e Session Storage vazios após os dois logins constavam da revisão de 29/09. A inspeção não foi repetida nesta revisão; o código atual não salva tokens em armazenamento Web.
-- [ ] Aluno conferir a entrega final contra o enunciado integral, especialmente a seção 7.2 citada na revisão anterior, e confirmar o aceite atualizado. Não foi criada assinatura em seu nome em 30/09.
-
-O aceite textual de João Vitor Andreata em 29/09 foi mantido no histórico Git. Ele não foi transformado em assinatura desta revisão. O aluno também deve conseguir explicar que arquivos estáticos permanecem públicos e que a sessão protege a API; a explicação está no README.
-
-A revisão anterior registrava uso de Node em ferramentas auxiliares. Não se declara que isso nunca ocorreu. O projeto entregue continua sem Node/npm/Wrangler como dependência ou etapa de build definida pelo aluno. A compilação interna do Cloudflare aparece no log da própria plataforma.
-
-Se o computador for compartilhado, encerrar as contas administrativas depois da revisão. Não foram encerradas automaticamente, pois o aluno está acompanhando o trabalho.
+Aceite atualizado da lista e de suas ressalvas: **aguarda confirmação pessoal do aluno**. Não assinar critérios desmarcados como concluídos.
