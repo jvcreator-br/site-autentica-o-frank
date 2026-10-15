@@ -1,0 +1,12 @@
+# Copie para wrangler.toml e preencha com os dados do banco já usado pelo site.
+# O workflow usa as variáveis D1_DATABASE_NAME e D1_DATABASE_ID para gerar
+# sua configuração separada, sem alterar as configurações do Pages.
+name = "site-autentica-o-frank"
+compatibility_date = "2026-10-15"
+pages_build_output_dir = "./public"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "PREENCHER_NOME_REAL_DO_BANCO"
+database_id = "PREENCHER_ID_REAL_DO_BANCO"
+migrations_dir = "migrations"
